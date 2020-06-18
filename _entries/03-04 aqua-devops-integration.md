@@ -9,6 +9,7 @@ Many Aqua customers want to shift security left and empower developers to scan e
 
 ### Install the Aqua Container Security Extension
 
+{% collapsible %}
 To install the Aqua Container Security extension in your Azure DevOps environment from the Visual Studio Marketplace, follow this link:
 
 <https://marketplace.visualstudio.com/items?itemName=aquasec.aquasec>
@@ -24,9 +25,11 @@ Select the Azure DevOps organization that was created for this lab, and click th
 Proceed to your Azure DevOps organization by clicking the **Proceed to organization button** button:
 
 ![Aqua Output](media/aqua/aqua-devops-3.png)
+{% endcollapsible %}
 
 ### Configure the Aqua Scanner Connection
 
+{% collapsible %}
 Select your **captureorder** project:
 
 ![Aqua Output](media/aqua/aqua-devops-4.png)
@@ -45,9 +48,11 @@ Provide values for the Server URL, Username, Password/Token Key and Service conn
 > **Note** The example uses the Aqua administator user to connect the scanner to the server. It's a best practice to create a new Aqua user with scanner only permissions for these connections.
 
 ![Aqua Output](media/aqua/aqua-devops-7.png)
+{% endcollapsible %}
 
 ### Configure the Aqua Registry Connection
 
+{% collapsible %}
 The Aqua Security Scanner extension can be used to scan both Windows and Linux images. The extension includes a scanner for Windows images, but a scanner for Linux images must be pulled from Aqua's private registry (or otherwise downloaded and added to the local Docker repostory of the Azure DevOps host where the image will be scanned) prior to scanning. For Azure DevOps hosted agents, this must be done each time. For customer managed agents, this can be done once.
 
 We will now create a Docker Registry service connection for the Aqua private registry, so we can login to the Aqua registry prior to the Aqua scan in our pipeline.
@@ -68,9 +73,11 @@ Provide values for the Registry Type, Docker Registry, Docker ID, Docker Passwor
 > * Password: `P@ssword01`
 
 ![Aqua Output](media/aqua/aqua-devops-10.png)
+{% endcollapsible %}
 
 ### Add the Aqua Scan Task to Pipeline
 
+{% collapsible %}
 Select your **azch-captureorder** pipeline:
 
 ![Aqua Output](media/aqua/aqua-devops-11.png)
@@ -165,5 +172,6 @@ You can view the Aqua scan results by selecting the **Aqua Scanner Report** tab,
 Often, the quickest path to remediating a vulnerability is to check if there's a known fix in a later version of the effected resource, reference the later version in your application, and build again:
 
 ![Aqua Output](media/aqua/aqua-devops-21.png)
+{% endcollapsible %}
 
 This concludes the lab. Thank you for participating.

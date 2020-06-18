@@ -28,8 +28,11 @@ We will now run through the following use cases with Aqua:
 
 After deployment, Aqua CSP begins to automatically discover your clusters, nodes and workloads, scanning all of them for risks including vulnerabilities, malware, configuration, compliance and more. This information drives Aqua's Risk Explorer, workload monitoring and infrastructure discover views which we'll explore now.
 
+> **Note:** It can take several minutes for Aqua to complete automatic discovery and scanning in your environment (after the Enforcers have been deployed and all capabilities have been enable). This may be a good time to take a short break.
+
 #### View Risk Explorer
 
+{% collapsible %}
 Select **Risk Explorer** from the navigation menu on the left.
 
 Aqua's Risk Explorer let's identify vulernable workloads at a glance with color coded controllers/containers based on risk assessment and organized by namespaces, and showing network connections to/from containers:
@@ -39,9 +42,11 @@ Aqua's Risk Explorer let's identify vulernable workloads at a glance with color 
 You can select individual containers to see a risk score based on comparing the vulnerability of the application to its infrastucture:
 
 ![Aqua Output](media/aqua/aqua-risk-explorer-2.png)
+{% endcollapsible %}
 
 #### View Workloads
 
+{% collapsible %}
 Select **Workloads** from the navigation menu on the left.
 
 Aqua provides similar information in a more filterable and tabular view:
@@ -55,9 +60,11 @@ You can drill down to containers:
 And get a wealth of detailed information about each container:
 
 ![Aqua Output](media/aqua/aqua-workloads-3.png)
+{% endcollapsible %}
 
 #### View Infrastructure
 
+{% collapsible %}
 Select **Infrastructure** from the navigation menu on the left.
 
 Aqua provides even more information through infrastructure discovery of your clusters and nodes:
@@ -73,6 +80,7 @@ And including host scanning and assurance with CIS benchmarking testing for Linu
 ![Aqua Output](media/aqua/aqua-infrastructure-3.png)
 
 > **Note** Aqua has a strong tradition of open source for greater transparency and maintainability. Aqua has a seperate open source development team that creates, acquires and maintains several open source projects with and for the community, including KubeHunter, KubeBench, DockerBench, LinuxBench and Trivy (among others). You'll find these open source projects here, https://github.com/aquasecurity.
+{% endcollapsible %}
 
 ### Image Assurance
 
@@ -106,6 +114,7 @@ Aqua's scanners send this information to the Aqua CyberCenter:
 
 #### Manually add an image to scan
 
+{% collapsible %}
 We will now add an image from the public Docker Hub registry:
 
 > 1. In the Aqua web console, in the navigation menu on the left, click on **Images**.
@@ -127,9 +136,11 @@ This will start the scan of the the jboss/wildfy image from Docker Hub. It will 
 Notice how the image is marked as Approved, even though it has many vulnerabilities. This will change later when we apply image assurance policies. 
 
 ![Aqua Output](media/aqua/aqua-image-scan-2.png)
+{% endcollapsible %}
 
 #### Connect to your Azure container registry
 
+{% collapsible %}
 Now we will integrate with your Azure container registry so you can pull in other images that might be on there.
 
 > 1. In the Aqua web console, in the navigation menu on the left, click **System**.
@@ -143,9 +154,11 @@ Now we will integrate with your Azure container registry so you can pull in othe
 > 1. Click the **Test Connection** button.
 > 1. Click the **OK** button.
 > 1. Click the **Save** button.
+{% endcollapsible %}
 
 #### Scan an image from your Azure container registry
 
+{% collapsible %}
 We have now integrated with your Azure container registry, and you will be able to select it when adding images to Aqua. Let's do that now.
 
 > 1. In the Aqua web console, in the navigation menu on the left, click **Images**.
@@ -154,12 +167,16 @@ We have now integrated with your Azure container registry, and you will be able 
 > 1. In the Search Term field, enter: **capture**
 > 1. Click the **Search** button.
 > 1. Select the **captureorder** repository.
+> 1. Select the tag that is not already selected.
+> 1. Click the **Add** button.
 
-For this lab, both tags for this image should have already by scanned as part of Aqua's runtime discovery features. Otherwise, some or all tags of an image could be added to Aqua's scan queue, and when finished scanning, their results could be found on the Images page.
+For this lab, one tag will already have been selected, because Aqua automatically identified and scanned that image for the running captureorder container. The other tag was created by our DevOps project, and was not automatically scanned because it was not deployed.
+{% endcollapsible %}
 
 #### Update the default image assurance policy
 After Aqua scans an image, it compares the results to all applicable image assurance policies. When a control in an applicable image assurance policy fails, several actions can be taken, including marking the image as non-compliant. Initially, Aqua includes a default image assurance policy that has no controls, so all image scans will pass image assurance, even if they have vulnerabilities.
 
+{% collapsible %}
 Let's update the default image assurance policy now:
 
 > 1. In the Aqua web console, in the navigation menu on the left, click **Policies**.
@@ -173,6 +190,7 @@ Let's update the default image assurance policy now:
 Go back to the Images page, and open the scan results for the jboss/wildfly:9.0.2.Final image that we scanned earlier. Notice how this image is now marked as non-compliant by the Default image assurnace policy, showing which control failed and what actions are needed to make the image compliant:
 
 ![Aqua Output](media/aqua/aqua-result-fail-jboss.png)
+{% endcollapsible %}
 
 ### Runtime Protection
 
@@ -182,6 +200,7 @@ Enforcement can prevent containers that use non-compliant and/or unregistered im
 
 #### Update the default runtime policy
 
+{% collapsible %}
 Let's update the default container runtime policy now:
 
 > 1. In the Aqua web console, in the navigation menu on the left, click **Policies**.
@@ -196,9 +215,11 @@ Let's update the default container runtime policy now:
 > 1. Click **OK** in the Restart Required dialog (the runtime policy will go into effect immediately without having to restart containers, but Aqua will only prevent containers from starting with blacklist volumes during container startup; Aqua will never stop an already running container)
 
 ![Aqua Output](media/aqua/aqua-runtime-policy.png)
+{% endcollapsible %}
 
 #### Block unregistered images
 
+{% collapsible %}
 In your Azure cloud shell, we're going to try to deploy an application.
 
 Run this command to deploy nginx:
@@ -254,9 +275,11 @@ kubectl get po -w
 ```
 
 The nginx pod should now be running. 
+{% endcollapsible %}
 
 #### Block certain executables from running
 
+{% collapsible %}
 Our default runtime policy blacklists the `date` executable. If we exec into the pod, we should not be able to execute the date command. 
 
 Run this command to exec into the nginx container (using the full name of the nginx pod output by previous command):
@@ -270,17 +293,19 @@ Notice that we are now in the nginx container as the root user (something else t
 ```sh
 date
 ```
+{% endcollapsible %}
 
 #### Prevent drift from happening
 
+{% collapsible %}
 Our default runtime policy prevents drift. Drift prevention ensures that your containers remain immutable, and protects you from both malicious attacks and bad habits by not allowing executables to run that were not part of the original image and/or not allowing the container to run when image parameters have changed.
 
 To simulate a drift, we will copy an allowed executable, like `ls`, to another name like `list`:
 
 ```sh 
+    cd /bin
     ls
-    which ls
-    cp /bin/ls /bin/list
+    cp ls list
 ```
 
 When we try to run the `list` command, instead of getting a list of the contents of the current directory, we will get a `Permission denied` error message. This is because Aqua considered that new executable to be drift and blocked that executable from running.
@@ -288,12 +313,15 @@ When we try to run the `list` command, instead of getting a list of the contents
 ```sh 
     list
 ```
+{% endcollapsible %}
 
 #### View audit events
 
+{% collapsible %}
 For every event that Aqua detects or prevents during risk assessment and runtime, Aqua generates a detailed audit record that can be viewed on the Audit page (and which can be easily sent to external log collectors via many out-of-the-box integrations):
 
 ![Aqua Output](media/aqua/aqua-audit.png)
+{% endcollapsible %}
 
 #### Keep exploring!
 

@@ -1,75 +1,77 @@
 ---
 sectionid: deploy
 sectionclass: h2
-title: Deploy Kubernetes with Azure Kubernetes Service (AKS)
+title: Create an Azure Kubernetes Service (AKS) Cluster
 parent-id: upandrunning
 ---
 
-Azure has a managed Kubernetes service, AKS (Azure Kubernetes Service). We'll use this to easily deploy and standup a Kubernetes cluster.
+This step has been automated for the condensed workshop. Instead, we will discover and authenticate to the existing AKS cluster in your environment, so you can execute kubectl commands.
 
 ### Tasks
 
-#### Get the latest Kubernetes version available in AKS
+#### Discover the AKS cluster
 
 {% collapsible %}
 
-Get the latest available non-preview Kubernetes version in your preferred region and store it in a bash variable. Replace `<region>` with the region of your choosing, for example `eastus`.
-
 ```sh
-version=$(az aks get-versions -l <region> --query 'orchestrators[?isPreview == null].[orchestratorVersion][-1]' -o tsv)
+cluster=$(az aks list --query "[*].name" --output tsv); echo $cluster
 ```
 
 {% endcollapsible %}
 
-#### Create the AKS cluster
-
-**Task Hints**
-* It's recommended to use the Azure CLI and the `az aks create` command to deploy your cluster. Refer to the docs linked in the Resources section, or run `az aks create -h` for details
-* The size and number of nodes in your cluster is not critical but two or more nodes of type `Standard_DS2_v2` or larger is recommended
-  
-{% collapsible %}
-
-  ```sh
-  az aks create --resource-group <resource-group> \
-    --name <unique-aks-cluster-name> \
-    --location <region> \
-    --kubernetes-version $version \
-    --generate-ssh-keys \
-    --load-balancer-sku basic \
-    --service-principal <APP_ID> \
-    --client-secret <APP_SECRET>
-  ```
-
-{% endcollapsible %}
-
-#### Ensure you can connect to the cluster using `kubectl`
+#### Access AKS cluster with kubectl
 
 **Task Hints**
 * `kubectl` is the main command line tool you will be using for working with Kubernetes and AKS. It is already installed in the Azure Cloud Shell
 * Refer to the AKS docs which includes [a guide for connecting kubectl to your cluster](https://docs.microsoft.com/en-us/azure/aks/kubernetes-walkthrough#connect-to-the-cluster) (Note. using the cloud shell you can skip the `install-cli` step).
 * A good sanity check is listing all the nodes in your cluster `kubectl get nodes`.
 * [This is a good cheat sheet](https://linuxacademy.com/site-content/uploads/2019/04/Kubernetes-Cheat-Sheet_07182019.pdf) for kubectl.
-* If you run kubectl in PowerShell ISE , you can also define aliases :
-```sh
-function k([Parameter(ValueFromRemainingArguments = $true)]$params) { & kubectl $params }
-function kubectl([Parameter(ValueFromRemainingArguments = $true)]$params) { Write-Output "> kubectl $(@($params | ForEach-Object {$_}) -join ' ')"; & kubectl.exe $params; }
-function k([Parameter(ValueFromRemainingArguments = $true)]$params) { Write-Output "> k $(@($params | ForEach-Object {$_}) -join ' ')"; & kubectl.exe $params; }
-```
 
 {% collapsible %}
-> **Note** `kubectl`, the Kubernetes CLI, is already installed on the Azure Cloud Shell.
-
-Authenticate
+Authenticate:
 
 ```sh
-az aks get-credentials --resource-group <resource-group> --name <unique-aks-cluster-name>
+group=$(az group list --query "[].{Name:name}" --output tsv); echo $group
+
+az aks get-credentials --resource-group $group --name $cluster
 ```
 
-Check cluster connectivity by listing the nodes in your cluster
+Check cluster connectivity by listing the nodes in your cluster:
 
 ```sh
 kubectl get nodes
 ```
+{% endcollapsible %}
+
+#### Explore Capture Order Application
+
+A three tiered application has already been deployed to your AKS cluster. It includes a mongo database behind an API behind a frontend behind a NGINX ingress controller.
+
+Let's quickly explore these components.
+
+{% collapsible %}
+
+First, notice the service created for the database, API and frontend in the default namespace:
+
+```sh
+kubectl get svc
+```
+
+Though the API is exposed externally, we'll access the frontend through the ingress controller using a DNS name that resolves to its external IP address:
+
+```sh
+kubectl get svc -n ingress
+```
+
+Copy the external IP address, and browse to a URL that includes it like so:
+
+```sh
+http://frontend.<ingress_external_ip_address>.nip.io
+```
+
+For example:
+
+
 {% endcollapsible %}
 
 > **Resources**

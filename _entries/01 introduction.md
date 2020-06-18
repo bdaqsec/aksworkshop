@@ -6,13 +6,14 @@ type: nocount
 is-parent: yes
 ---
 
-Welcome to the Azure Kubernetes & Aqua Security Workshop. In this lab, you'll go through tasks that will help you master different topics required to deploy a multi-container application to Kubernetes on [Azure Kubernetes Service (AKS)](https://azure.microsoft.com/en-us/services/kubernetes-service/), and setup security scans (both in registries and in CI/CD pipelines) and enforce security policies using Aqua Cloud-native Security Platform (CSP). 
+Welcome to the Azure Kubernetes & Aqua Security Workshop. In this workshop, you will explore Aqua's security capabilities in an Azure environment with Azure Kubernetes Service (AKS), Azure Container Registry (ACR) and Azure DevOps.
 
-You can use this guide as a Kubernetes tutorial and as study material to help you get started to learn Kubernetes.
+> **Note**: This workshop is based on another workshop, [Azure Kubernetes Service Workshop](https://docs.microsoft.com/en-us/learn/modules/aks-workshop/), that includes much more content meant to be delivered as an onsite and self-paced workshop over a longer period of time (e.g. one to two days). Much of the content has been removed to focus on Aqua's security capabilities in an online and guided workshop over a shorter period of time (e.g. two to three hours).
 
 Some of the things you’ll be going through:
 
-- Kubernetes deployments, services and ingress
-- Deploying MongoDB using Helm version 3
-- Building CI/CD pipelines using Azure DevOps and Azure Container Registry
-- Setting up security scans and enforcing security policies using Aqua CSP
+- Creating an AKS cluster (automated for this condensed workshop)
+- Creating an ACR registry (automated for this condensed workshop)
+- Building CI/CD pipelines using Azure DevOps and ACR
+- Setting up security scans and enforcing security policies using Aqua Cloud-native Security Platform (Aqua CSP)
+

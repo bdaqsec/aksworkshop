@@ -8,6 +8,8 @@ parent-id: intro
 
 There are a number of values that you will be provided or you will create along the way that you will need later on in the lab. For your convenience, we list the most relevant here. It's recommended that you copy this list to a text editor and update the values as you go along. That way, it will be easy to copy them from the text editor when you need them, and especially if you lose your Azure Cloud Shell connection during the lab.
 
+{% collapsible %}
+
 ```sh
 Azure Credentials:
 
@@ -20,25 +22,11 @@ Application ID (Service Pincipal):		<Sent in email, and available on lab environ
 
 Application Secret Key (Client Secret):	<Sent in email, and available on lab environment details page>
 
-Region: 								<Location value of "az group list" command output>
-
 Resource Group: 						<Name value of "az group list" command output>
 
-Cluster Name: 							<Specified when creating cluster>
+Cluster Name: 							<Name value of "az aks list" command output>
 
-MongoDB Username: 						orders-user
-
-MongoDB Password: 						orders-password
-
-MongoDB DNS Name: 						orders-mongo-mongodb.default.svc.cluster.local
-
-Capture Order IP Address: 				<External IP value of "kubectl get svc captureorder" command output> 
-
-Ingress IP Address: 					<External IP value of "kubectl get svc -n ingress ingress-nginx-ingress-controller" command output> 
-
-Azure Container Registry Name: 			<Specified when creating registry> 
-
-Build ID: 								<Run ID from "az acr build" command> 
+Azure Container Registry Name: 			<Name value of "az acr list" command output>  
 
 Aqua Admin Username: 					administrator
 
@@ -48,6 +36,7 @@ Aqua Server IP: 						<From output of Aqua deployment; or external IP value of "
 
 Aqua Server URL: 						http://<Aqua Server IP>:8080
 ```
+{% endcollapsible %}
 
 ### Access Azure Cloud Shell
 
