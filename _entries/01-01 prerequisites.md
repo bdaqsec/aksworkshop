@@ -4,38 +4,40 @@ sectionclass: h2
 title: Prerequisites
 parent-id: intro
 ---
+
 ### Open Text Editor
 
 There are a number of values that you will be provided or you will create along the way that you will need later on in the lab. For your convenience, we list the most relevant here. It's recommended that you copy this list to a text editor and update the values as you go along. That way, it will be easy to copy them from the text editor when you need them, and especially if you lose your Azure Cloud Shell connection during the lab.
 
 {% collapsible %}
 
-```sh
+```text
 Azure Credentials:
 
-Username:	<Sent in email, and available on lab environment details page>
-Password:	<Sent in email, and available on lab environment details page>
+   Username: <Sent in email, and available on lab environment details page>
+   Password: <Sent in email, and available on lab environment details page>
 
 Others:
 
-Application ID (Service Pincipal):		<Sent in email, and available on lab environment details page>
+   Application ID (Service Pincipal): <Sent in email, and available on lab environment details page>
 
-Application Secret Key (Client Secret):	<Sent in email, and available on lab environment details page>
+   Application Secret Key (Client Secret): <Sent in email, and available on lab environment details page>
 
-Resource Group: 						<Name value of "az group list" command output>
+   Resource Group: <Name value of "az group list" command output>
 
-Cluster Name: 							<Name value of "az aks list" command output>
+   Cluster Name: <Name value of "az aks list" command output>
 
-Azure Container Registry Name: 			<Name value of "az acr list" command output>  
+   Azure Container Registry Name: <Name value of "az acr list" command output>
 
-Aqua Admin Username: 					administrator
+   Aqua Admin Username: administrator
 
-Aqua Admin Password: 					<Specified when deploying Aqua>
+   Aqua Admin Password: P@ssword01
 
-Aqua Server IP: 						<From output of Aqua deployment; or external IP value of "kubectl get svc aqua-web -n aqua" command output> 
+   Aqua Server IP: <From output of Aqua deployment; or external IP value of "kubectl get svc aqua-web -n aqua" command output>
 
-Aqua Server URL: 						http://<Aqua Server IP>:8080
+   Aqua Server URL: http://<Aqua Server IP>:8080
 ```
+
 {% endcollapsible %}
 
 ### Access Azure Cloud Shell
